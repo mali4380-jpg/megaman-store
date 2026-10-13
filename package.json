@@ -1,0 +1,19 @@
+{
+  "name": "megaman-mobile-plans",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Arabic-first MEGAMAN storefront and order management app",
+  "engines": {
+    "node": ">=20.6.0"
+  },
+  "scripts": {
+    "start": "node --env-file=.env server.js",
+    "dev": "node --watch --env-file=.env server.js"
+  },
+  "dependencies": {
+    "cors": "2.8.6",
+    "express": "5.2.1",
+    "multer": "2.4.0",
+    "xlsx": "0.18.5"
+  }
+}
