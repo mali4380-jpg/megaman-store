@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ميجامان محارب النت | تجديد باقات الإنترنت والمكالمات بأقل سعر في مصر</title>
+  <!-- Google Fonts Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/jpeg" href="/images/megaman-logo.jpeg">
+</head>
+<body>
+  <div class="salawat-sticky" aria-label="تذكير بالصلاة على النبي">ﷺ صلِّ على النبي ﷺ</div>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo-brand">
+        <img src="images/megaman-logo.jpeg" alt="شعار ميجامان محارب النت">
+        <div class="brand-text">
+          <h1>ميجامان محارب النت</h1>
+          <span>سابقاً ستالايت وفر نت | تجديد رسمي 100%</span>
+        </div>
+      </a>
+      <div class="nav-links">
+        <a href="#packages-section" class="nav-btn"><i class="fa-solid fa-bolt"></i> الباقات والأسعار</a>
+        <a href="#track-section" class="nav-btn"><i class="fa-solid fa-magnifying-glass"></i> تتبع طلبك</a>
+        <button id="auth-nav-btn" class="nav-btn primary" onclick="openAuthModal()">
+          <i class="fa-solid fa-user-plus"></i> <span id="auth-btn-text">تسجيل دخول</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero container">
+    <div class="hero-badge">
+      <i class="fa-solid fa-shield-halved"></i> تجديد معتمد ورسمي من شركات المحمول • خصومات تصل إلى 35%
+    </div>
+    <h2>
+      وفر فلوسك، كبّر باقتك وخليك مع <br>
+      <span class="gradient">ميجامان محارب النت!</span> ⚡
+    </h2>
+    <p>
+      أسرع وأضمن خدمة تجديد باقات إنترنت ومكالمات في مصر لسائقي النقل الذكي (أوبر / ديدي / إندرايف)، كباتن التوصيل، وكل أبطال النت اليومي. تجديد رسمي ومباشر بدون أي حيل.
+    </p>
+
+    <!-- Trust Badges -->
+    <div class="trust-badges">
+      <div class="trust-badge-item"><i class="fa-solid fa-check-circle" style="color:#10b981;"></i> تجديد رسمي معتمد</div>
+      <div class="trust-badge-item"><i class="fa-solid fa-bolt" style="color:#00d2ff;"></i> تفعيل سريع خلال دقائق</div>
+      <div class="trust-badge-item"><i class="fa-solid fa-hand-holding-dollar" style="color:#f59e0b;"></i> ضمان استرداد فوري 100%</div>
+      <div class="trust-badge-item"><i class="fa-solid fa-headset" style="color:#ec4899;"></i> دعم فني مستمر معك في ضهرك</div>
+    </div>
+
+    <!-- Active User Bar (Dynamic) -->
+    <div id="user-profile-bar" class="user-bar" style="display: none;">
+      <div class="user-info-box">
+        <div class="user-avatar" id="user-avatar-char">م</div>
+        <div class="user-text">
+          <h4 id="user-display-name">مرحباً بك</h4>
+          <span id="user-tier-badge">عميل جديد 🥉</span>
+        </div>
+      </div>
+      <div>
+        <span style="font-size:0.85rem; color:var(--text-muted); margin-left:10px;">إجمالي المشتريات: <b id="user-total-spent" style="color:#10b981;">0</b> ج.م</span>
+        <button class="nav-btn" onclick="openMyOrdersModal()"><i class="fa-solid fa-receipt"></i> سجل طلباتي (<span id="user-orders-count">0</span>)</button>
+        <button class="nav-btn" onclick="logoutUser()" style="border-color:#ef4444; color:#ef4444;"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="renewal-notice container"><i class="fa-solid fa-calendar-check"></i> <strong>مواعيد التجديد:</strong> باقات WE واتصالات وأورنج قبل يوم 1 ويوم 15 من كل شهر، وفودافون قبل يوم 10 ويوم 25. يُرجى الالتزام بالمواعيد؛ وقد تُضاف رسوم على طلبات التجديد خارج المواعيد.</div>
+
+  <!-- Network Selection Section -->
+  <main class="container" id="packages-section">
+    <div class="section-title">
+      <h3>اختر شبكة الخط اللي حابب تفعل عليه الباقة 👇</h3>
+      <p>وعملائنا اللي بيجددوا معانا باستمرار ليهم عروض وأسعار خاصة جداً 🎁🔥</p>
+    </div>
+
+    <!-- Networks Tabs -->
+    <div class="network-tabs">
+      <button class="network-tab-btn active we" onclick="selectNetwork('WE')">
+        <div class="tab-icon">🟣</div>
+        <div class="tab-title">شبكة WE (وي)</div>
+        <div class="tab-sub">باقات تبدأ من 230 ج</div>
+      </button>
+
+      <button class="network-tab-btn etisalat" onclick="selectNetwork('ETISALAT')">
+        <div class="tab-icon">🟢</div>
+        <div class="tab-title">شبكة اتصالات</div>
+        <div class="tab-sub">باقات تبدأ من 260 ج</div>
+      </button>
+
+      <button class="network-tab-btn orange" onclick="selectNetwork('ORANGE')">
+        <div class="tab-icon">🟠</div>
+        <div class="tab-title">شبكة Orange</div>
+        <div class="tab-sub">باقات تبدأ من 150 ج</div>
+      </button>
+
+      <button class="network-tab-btn vodafone" onclick="selectNetwork('VODAFONE')">
+        <div class="tab-icon">🔴</div>
+        <div class="tab-title">شبكة Vodafone</div>
+        <div class="tab-sub">فليكسات حسب العرض</div>
+      </button>
+    </div>
+
+    <section id="network-feature" class="network-feature" aria-live="polite">
+      <img id="network-feature-image" src="images/we-packages.jpeg" alt="باقات وي جولد ميجامان">
+      <div id="network-instructions" class="network-instructions"></div>
+    </section>
+
+    <!-- Dynamic Packages List -->
+    <div id="packages-container" class="packages-grid">
+      <!-- Injected by JavaScript -->
+    </div>
+
+    <!-- Vodafone Price Inquiry Special Banner -->
+    <div id="vodafone-info-banner" class="vodafone-special-box" style="display:none;">
+      <h3 style="color:#ff5252; margin-bottom:10px;"><i class="fa-solid fa-fire"></i> باقات فودافون فليكس ❤️</h3>
+      <p style="color:#f0f6fc; font-size:1rem; margin-bottom:15px;">
+        باقات (5200 Flex) و (10400 Flex) - السعر بيتحدد حسب العرض الحصري المتاح على خطك حالياً!
+      </p>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">
+        اضغط على زر «معرفة السعر» وهيتواصل معاك أحد أفراد فريق وفر نت فوراً بأفضل سعر متاح ليك 📲
+      </p>
+      <button class="btn-select-pkg" style="max-width:300px; margin:0 auto;" onclick="openVodafoneInquiryModal()">
+        <i class="fa-brands fa-whatsapp"></i> استفسر عن سعر باقتك الآن
+      </button>
+    </div>
+  </main>
+
+  <!-- Track Order Section -->
+  <section class="container" id="track-section" style="margin-top: 50px;">
+    <div class="section-title">
+      <h3><i class="fa-solid fa-satellite-dish" style="color:var(--primary);"></i> تتبع حالة باقتك لحظة بلحظة</h3>
+      <p>اكتب رقم الطلب (مثال: WN-000101) أو رقم هاتفك لمعرفة حالة التفعيل ومطابقة الدفع</p>
+    </div>
+
+    <div style="max-width: 600px; margin: 0 auto; background: var(--bg-card); padding: 25px; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+      <div style="display: flex; gap: 10px;">
+        <input type="text" id="track-input" class="form-input" placeholder="اكتب رقم الطلب WN-000XXX أو رقم الهاتف..." style="margin-bottom:0;">
+        <button class="btn-select-pkg" style="width: auto; padding: 0 25px; white-space: nowrap;" onclick="trackOrder()">
+          <i class="fa-solid fa-search"></i> بحث
+        </button>
+      </div>
+
+      <!-- Tracking Result Container -->
+      <div id="track-result-box" style="display:none; margin-top: 25px;">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Value & Loyalty Features -->
+  <section class="container features-section">
+    <div class="section-title">
+      <h3>ليه تختار "ميجامان محارب النت"؟ 🛡️</h3>
+      <p>مش مجرد تجديد باقة، إحنا شركاء نجاحك في شغلك ويومك</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="color:#00d2ff;"><i class="fa-solid fa-piggy-bank"></i></div>
+        <h4>وفر حتى 35% من جيبك</h4>
+        <p>نفس باقتك الرسمية بحجمها الكامل وبسعر أقل بكتير من كروت الشحن وتطبيقات الدفع المعتادة.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="color:#10b981;"><i class="fa-solid fa-shield-virus"></i></div>
+        <h4>تجديد رسمي وقانوني 100%</h4>
+        <p>بدون برامج، بدون vpn، بدون أي مخاطرة بخطك. باقتك بتنزل في حسابك الرسمي على أبلكيشن شركتك.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="color:#f59e0b;"><i class="fa-solid fa-crown"></i></div>
+        <h4>برنامج الولاء للعملاء الدائمين</h4>
+        <p>كل ما تجدد معانا أكتر، بتاخد نقط وخصومات إضافية وهدايا مجانية ومتابعة خاصة قبل ميعاد التجديد.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon" style="color:#ec4899;"><i class="fa-solid fa-comments"></i></div>
+        <h4>جروب وقناة متابعة فورية</h4>
+        <p>انضم لجروب التلجرام وقناة الواتساب لتكون أول من يستفيد من العروض المباغتة وخصومات الويك إند.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating WhatsApp Action -->
+  <a id="floating-whatsapp-btn" href="https://wa.me/201000000000?text=مرحباً%20ميجامان،%20عايز%20أستفسر%20عن%20باقات%20النت" target="_blank" class="floating-whatsapp" title="تواصل مع خدمة العملاء على واتساب">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ============================================== -->
+  <!-- MODAL 1: AUTH / LOGIN MODAL -->
+  <!-- ============================================== -->
+  <div id="auth-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-user-lock" style="color:var(--primary);"></i> تسجيل سريع في ميجامان</h3>
+        <button class="modal-close-btn" onclick="closeModal('auth-modal')">&times;</button>
+      </div>
+      <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">
+        سجل باسمك ورقم هاتفك في ثوانٍ لتحصل على خصومات العملاء الدائمين وتتابع باقاتك بسهولة.
+      </p>
+
+      <div style="display:flex;gap:8px;margin-bottom:16px;">
+        <button type="button" id="auth-tab-register" class="btn-select-pkg" onclick="setAuthMode('register')" style="flex:1;">إنشاء حساب</button>
+        <button type="button" id="auth-tab-login" class="btn-select-pkg" onclick="setAuthMode('login')" style="flex:1;background:#64748b;">تسجيل الدخول</button>
+      </div>
+      <form id="auth-form" onsubmit="handleAuthSubmit(event)">
+        <div class="form-group" id="auth-name-group">
+          <label>اسمك بالكامل:</label>
+          <input type="text" id="auth-name-input" class="form-input" placeholder="ادخل اسمك" autocomplete="name">
+        </div>
+        <div class="form-group">
+          <label>رقم واتساب المصري:</label>
+          <input type="tel" id="auth-phone-input" class="form-input" placeholder="01012345678" pattern="01[0125][0-9]{8}" autocomplete="tel" required>
+          <div class="form-helper">استخدم رقم واتساب الخاص بك وكلمة مرور لتسجيل حسابك.</div>
+        </div>
+        <div class="form-group" id="auth-password-group">
+          <label>كلمة المرور (8 أحرف على الأقل):</label>
+          <input type="password" id="auth-password-input" class="form-input" minlength="8" autocomplete="new-password" required>
+        </div>
+        <div id="auth-feedback" class="form-helper" role="status" style="margin:8px 0;"></div>
+        <button type="submit" id="auth-submit-btn" class="btn-select-pkg" style="margin-top:10px;">
+          <i class="fa-solid fa-user-plus"></i> إنشاء حساب
+        </button>
+      </form>
+      <button type="button" id="forgot-password-btn" class="forgot-password-btn" onclick="openResetPassword()">نسيت كلمة المرور؟ إعادة التعيين</button>
+    </div>
+  </div>
+
+  <div id="reset-password-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header"><h3>إعادة تعيين كلمة المرور</h3><button class="modal-close-btn" onclick="closeModal('reset-password-modal')">&times;</button></div>
+      <p class="form-helper">سيتم إرسال رمز تحقق إلى واتساب المسجل بالحساب.</p>
+      <form id="reset-password-form" onsubmit="submitPasswordReset(event)">
+        <div class="form-group"><label>رقم واتساب</label><input id="reset-phone" class="form-input" type="tel" pattern="01[0125][0-9]{8}" placeholder="01012345678" required></div>
+        <div class="form-group"><label>رمز التحقق (بعد طلبه)</label><input id="reset-otp" class="form-input" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" placeholder="123456" required></div>
+        <div class="form-group"><label>كلمة المرور الجديدة</label><input id="reset-new-password" class="form-input" type="password" minlength="8" required></div>
+        <div id="reset-feedback" class="form-helper" role="status"></div>
+        <button type="button" class="btn-select-pkg" onclick="requestPasswordResetOtp()">إرسال رمز التحقق</button>
+        <button type="submit" class="btn-select-pkg" style="margin-top:8px">تأكيد وتغيير كلمة المرور</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL 2: ORDER WIZARD MODAL (Review -> Details -> Payment) -->
+  <!-- ============================================== -->
+  <div id="order-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="order-modal-title"><i class="fa-solid fa-cart-shopping" style="color:var(--primary);"></i> حجز الباقة</h3>
+        <button class="modal-close-btn" onclick="closeModal('order-modal')">&times;</button>
+      </div>
+
+      <!-- STEP 1: REVIEW PACKAGE -->
+      <div id="order-step-1">
+        <h4 style="margin-bottom:15px; color:#00d2ff;"><i class="fa-solid fa-list-check"></i> 🎯 مراجعة طلبك</h4>
+        <div class="order-summary-box">
+          <div class="summary-row">
+            <span>الشبكة:</span>
+            <b id="summary-network-badge">WE</b>
+          </div>
+          <div class="summary-row">
+            <span>الباقة المختارة:</span>
+            <b id="summary-package-name">30 جيجا + 1700 دقيقة</b>
+          </div>
+          <div class="summary-row">
+            <span>السعر التنافسي:</span>
+            <b id="summary-package-price">340 جنيه</b>
+          </div>
+          <div class="summary-row">
+            <span>رقم التفعيل:</span>
+            <span style="color:var(--text-muted);">سيتم إدخاله في الخطوة التالية</span>
+          </div>
+        </div>
+
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:20px;">
+          هل تفاصيل الباقة صحيحة وترغب في استكمال حجز التفعيل؟
+        </p>
+
+        <div style="display:flex; gap:10px;">
+          <button class="btn-select-pkg" onclick="goToOrderStep(2)">
+            🟢 تأكيد الطلب والمتابعة
+          </button>
+          <button class="nav-btn" onclick="closeModal('order-modal')" style="width: auto;">
+            🔄 تغيير الباقة
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: CUSTOMER & ACTIVATION DETAILS -->
+      <div id="order-step-2" style="display:none;">
+        <h4 style="margin-bottom:12px; color:#00d2ff;"><i class="fa-solid fa-user-pen"></i> 👤 بيانات العميل والتفعيل</h4>
+        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:18px;">
+          تمام! محتاجين بيانات بسيطة وسريعة لتأكيد الحجز وتجهيز كود التفعيل
+        </p>
+
+        <div class="form-group">
+          <label>✏️ اكتب اسم العميل:</label>
+          <input type="text" id="order-customer-name" class="form-input" placeholder="ادخل اسمك" required>
+        </div>
+
+        <div class="form-group">
+          <label>📱 اكتب رقم الهاتف اللي هيتم تفعيل الباقة عليه:</label>
+          <input type="tel" id="order-activation-phone" class="form-input" placeholder="01XXXXXXXXX" pattern="01[0125][0-9]{8}" required>
+          <div class="form-helper" style="color:#f59e0b;">⚠️ تأكد إن الرقم صحيح قبل الإرسال لتجنب شحن خط آخر.</div>
+        </div>
+
+        <div class="form-group">
+          <label>💬 رقم واتساب للتواصل ومتابعة التفعيل:</label>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:8px;">هل رقم الواتساب هو نفس رقم التفعيل؟</p>
+          <div class="radio-toggle-group">
+            <button type="button" id="same-phone-yes" class="radio-toggle-btn active" onclick="setSameWhatsApp(true)">
+              🟢 نعم، نفس الرقم
+            </button>
+            <button type="button" id="same-phone-no" class="radio-toggle-btn" onclick="setSameWhatsApp(false)">
+              🔵 لا، رقم آخر
+            </button>
+          </div>
+          <div id="diff-whatsapp-group" style="display:none; margin-top:12px;">
+            <input type="tel" id="order-whatsapp-phone" class="form-input" placeholder="اكتب رقم الواتساب الآخر 01XXXXXXXXX">
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:20px;">
+          <button class="btn-select-pkg" onclick="submitOrderDetails()">
+            <i class="fa-solid fa-check"></i> تأكيد البيانات والانتقال للدفع
+          </button>
+          <button class="nav-btn" onclick="goToOrderStep(1)" style="width:auto;">🔙 رجوع</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: PAYMENT & SCREENSHOT PROOF -->
+      <div id="order-step-3" style="display:none;">
+        <h4 style="margin-bottom:12px; color:#10b981;"><i class="fa-solid fa-credit-card"></i> 🧾 تأكيد الحجز والدفع</h4>
+        
+        <div class="order-summary-box">
+          <div class="summary-row">
+            <span>رقم الطلب:</span>
+            <b id="pay-order-id" style="color:var(--primary);">WN-000000</b>
+          </div>
+          <div class="summary-row">
+            <span>👤 العميل:</span>
+            <span id="pay-customer-name">ادخل اسمك</span>
+          </div>
+          <div class="summary-row">
+            <span>📱 رقم التفعيل:</span>
+            <span id="pay-activation-phone">01150944189</span>
+          </div>
+          <div class="summary-row">
+            <span>📦 الباقة:</span>
+            <span id="pay-package-details">30 جيجا + 1700 دقيقة</span>
+          </div>
+          <div class="summary-row">
+            <span>💰 المطلوب للحجز:</span>
+            <b id="pay-amount-due" style="color:#10b981; font-size:1.2rem;">340 جنيه</b>
+          </div>
+        </div>
+
+        <!-- Payment Instructions -->
+        <div class="payment-details-card">
+          <h5 style="color:#10b981; margin-bottom:8px;"><i class="fa-solid fa-building-columns"></i> حسابات الدفع المعتمدة:</h5>
+          
+          <div class="payment-method-item">
+            <div>
+              <b>إنستاباي (InstaPay):</b><br>
+              <span id="instapay-val" style="font-family:monospace; color:var(--primary);">01150944189</span>
+            </div>
+            <button class="copy-badge-btn" onclick="copyToClipboard('instapay-val')">نسخ</button>
+          </div>
+
+          <div class="payment-method-item">
+            <div>
+              <b>فودافون كاش / محافظ إلكترونية:</b><br>
+              <span id="wallet-val" style="font-family:monospace; color:#ff9100;">01150944189</span>
+            </div>
+            <button class="copy-badge-btn" onclick="copyToClipboard('wallet-val')">نسخ</button>
+          </div>
+        </div>
+
+        <div style="background: rgba(0,0,0,0.25); border:1px solid var(--border-color); border-radius:var(--radius-sm); padding:15px; margin-bottom:15px;">
+          <h5 style="margin-bottom:8px;"><i class="fa-solid fa-camera"></i> لإتمام الحجز، قم بالتحويل ثم أرسل إثبات الدفع:</h5>
+          <input type="file" id="proof-file-input" accept="image/*" class="form-input" style="padding:8px;">
+          <div class="form-helper">ارفع سكرين شوت إشعار التحويل من إنستاباي أو المحفظة</div>
+        </div>
+
+        <button class="btn-select-pkg" onclick="uploadPaymentProof()" style="margin-bottom:10px;">
+          <i class="fa-solid fa-cloud-arrow-up"></i> رفع الإثبات وتأكيد الحجز فوراً 📸
+        </button>
+
+        <p style="background:rgba(37,211,102,.10);border:1px solid rgba(37,211,102,.45);border-radius:12px;padding:12px;margin-top:10px;color:var(--text-main);font-size:.9rem;line-height:1.9;text-align:center;">
+          <i class="fa-brands fa-whatsapp" style="color:#25d366;font-size:20px;"></i><br>
+          <strong>مهم لإتمام الطلب:</strong>
+          بعد رفع الإيصال وفتح واتساب، اختَر صورة الإيصال من المعرض وأرفقها بنفسك مع الرسالة ثم اضغط إرسال.
+        </p>
+      </div>
+
+      <!-- STEP 4: ORDER CONFIRMED / TRACKING -->
+      <div id="order-step-4" style="display:none; text-align:center;">
+        <div style="width:70px; height:70px; background:rgba(16,185,129,0.2); border:2px solid #10b981; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 15px; font-size:2rem; color:#10b981;">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <h3 style="color:#10b981; margin-bottom:6px;">تم استلام طلبك وإثبات الدفع بنجاح! ✅</h3>
+        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:15px;">
+          طلبك الآن قيد المراجعة الفورية، وهيتم تحويله للمورد لتفعيل الباقة على خطك.
+        </p>
+
+        <div style="background:var(--bg-dark); padding:15px; border-radius:var(--radius-sm); border:1px solid var(--border-color); margin-bottom:20px;">
+          <div style="font-size:0.85rem; color:var(--text-muted);">رقم طلبك للمتابعة:</div>
+          <div id="success-order-id" style="font-size:1.6rem; font-weight:900; color:var(--primary); letter-spacing:1px; margin:4px 0;">WN-000101</div>
+          <div style="font-size:0.8rem; color:#f59e0b;">احتفظ بهذا الرقم أو سكرين شوت من هذه الشاشة</div>
+        </div>
+
+        <div class="timeline-steps">
+          <div class="timeline-step completed">
+            <div class="step-circle"><i class="fa-solid fa-check"></i></div>
+            <div class="step-label">حجز 🟡</div>
+          </div>
+          <div class="timeline-step completed">
+            <div class="step-circle"><i class="fa-solid fa-check"></i></div>
+            <div class="step-label">تم الدفع 🟢</div>
+          </div>
+          <div class="timeline-step active">
+            <div class="step-circle"><i class="fa-solid fa-hourglass-half"></i></div>
+            <div class="step-label">قيد التفعيل 🟠</div>
+          </div>
+          <div class="timeline-step">
+            <div class="step-circle">5</div>
+            <div class="step-label">تم التفعيل ✅</div>
+          </div>
+        </div>
+
+        <button class="btn-select-pkg" onclick="closeModal('order-modal'); trackOrderWithId(currentActiveOrder.id)">
+          <i class="fa-solid fa-satellite-dish"></i> متابعة حالة التفعيل في الموقع
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL 3: VODAFONE INQUIRY MODAL -->
+  <!-- ============================================== -->
+  <div id="vodafone-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="color:#ff5252;"><i class="fa-brands fa-square-whatsapp"></i> استفسار عن أسعار فودافون فليكس</h3>
+        <button class="modal-close-btn" onclick="closeModal('vodafone-modal')">&times;</button>
+      </div>
+      <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:15px;">
+        لأن باقات فودافون (5200 Flex و 10400 Flex) أسعارها بتنزل بعروض مختلفة حسب رقم الخط، اكتب رقمك وهنرد عليك فوراً بأعلى خصم متاح!
+      </p>
+
+      <div class="form-group">
+        <label>اسمك:</label>
+        <input type="text" id="vf-inquiry-name" class="form-input" placeholder="اسمك الكريم">
+      </div>
+      <div class="form-group">
+        <label>رقم فودافون المراد الاستفسار عنه:</label>
+        <input type="tel" id="vf-inquiry-phone" class="form-input" placeholder="010XXXXXXXX">
+      </div>
+      <div class="form-group">
+        <label>نوع الباقة المرغوبة:</label>
+        <select id="vf-inquiry-pkg" class="form-input">
+          <option value="5200 Flex">5200 Flex</option>
+          <option value="10400 Flex">10400 Flex</option>
+        </select>
+      </div>
+
+      <button class="btn-select-pkg" style="background:var(--vodafone-color); color:#fff;" onclick="submitVodafoneInquiry()">
+        <i class="fa-brands fa-whatsapp"></i> إرسال الاستفسار على واتساب فوراً
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL 4: CUSTOMER PAST ORDERS MODAL -->
+  <!-- ============================================== -->
+  <div id="my-orders-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-clock-rotate-left" style="color:var(--primary);"></i> سجل طلباتي السابقة</h3>
+        <button class="modal-close-btn" onclick="closeModal('my-orders-modal')">&times;</button>
+      </div>
+      <div id="past-orders-list">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p style="margin-bottom:10px;">
+        جميع الحقوق محفوظة © 2026 لمشروع <b>ميجامان محارب النت</b> (ستالايت وفر نت سابقاً) ⚡
+      </p>
+      <p style="font-size:0.8rem; color:var(--text-muted);">
+        خدمة تجديد باقات الإنترنت والمكالمات لجميع شبكات المحمول المصرية (وي - اتصالات - أورنج - فودافون) بأسعار منافسة وتجديد رسمي 100%.
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
