@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بوابة المورد ووكيل التفعيل | ميجامان محارب النت</title>
+  <!-- Google Fonts Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .supplier-header {
+      background: #1e1b4b;
+      border-bottom: 2px solid #6366f1;
+      padding: 18px 0;
+    }
+    .supplier-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      border-right: 5px solid #f97316;
+      transition: all 0.2s ease;
+    }
+    .supplier-card:hover {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      transform: translateY(-2px);
+    }
+    .copy-phone-btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .copy-phone-btn:hover {
+      background: var(--primary);
+      color: #000;
+      border-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Supplier Header -->
+  <div class="supplier-header">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-size:1.6rem; color:#818cf8;"><i class="fa-solid fa-bolt-lightning"></i></span>
+        <div>
+          <h2 style="font-size:1.25rem; font-weight:800; color:#fff;">بوابة وكيل التفعيل والمورد المعتمد</h2>
+          <span style="font-size:0.8rem; color:#a5b4fc;">استلام الطلبات المدفوعة وتجديد الباقات الفوري</span>
+        </div>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button class="nav-btn primary" onclick="exportCsv()">
+          <i class="fa-solid fa-file-excel"></i> تنزيل كشف التفعيل (CSV)
+        </button>
+        <button class="nav-btn" onclick="loadSupplierOrders()">
+          <i class="fa-solid fa-rotate"></i> تحديث
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container" style="padding: 30px 20px;">
+
+    <!-- Status Overview Bar -->
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:15px; margin-bottom:25px;">
+      <div style="background:rgba(249,115,22,0.1); border:1px solid #f97316; border-radius:var(--radius-md); padding:16px;">
+        <span style="font-size:0.85rem; color:#fb923c;">طلبات جاهزة للتفعيل الآن ⏳</span>
+        <h3 id="supplier-pending-count" style="font-size:1.8rem; color:#fff; margin-top:5px;">0</h3>
+      </div>
+      <div style="background:rgba(34,197,94,0.1); border:1px solid #22c55e; border-radius:var(--radius-md); padding:16px;">
+        <span style="font-size:0.85rem; color:#4ade80;">تم تفعيلها بنجاح اليوم ✅</span>
+        <h3 id="supplier-completed-count" style="font-size:1.8rem; color:#fff; margin-top:5px;">0</h3>
+      </div>
+    </div>
+
+    <!-- Active Orders Ready for Activation -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+      <h3 style="font-size:1.2rem; font-weight:800; color:#f0f6fc;">
+        <i class="fa-solid fa-list-check" style="color:#f97316;"></i> قائمة أرقام العملاء المطلوب تفعيلها:
+      </h3>
+      <span style="font-size:0.85rem; color:var(--text-muted);">
+        (تصل هنا فقط الطلبات التي تم التأكد من استلام تحويلها)
+      </span>
+    </div>
+
+    <div id="supplier-orders-list">
+      <!-- Injected dynamically -->
+    </div>
+
+  </main>
+
+  <script src="supplier.js"></script>
+</body>
+</html>

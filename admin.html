@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم الإدارية | ميجامان محارب النت</title>
+  <!-- Google Fonts Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .admin-nav {
+      background: #111827;
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 0;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+    }
+    .kpi-card.green::before { background: #10b981; }
+    .kpi-card.yellow::before { background: #eab308; }
+    .kpi-card.orange::before { background: #f97316; }
+    .kpi-card.purple::before { background: #9d4edd; }
+    .kpi-card.red::before { background: #ef4444; }
+
+    .kpi-val {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #fff;
+      margin: 8px 0 2px;
+    }
+    .kpi-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .kpi-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      margin-bottom: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: right;
+      font-size: 0.9rem;
+    }
+    th {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+    }
+    tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .badge-booking { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid #eab308; }
+    .badge-awaiting { background: rgba(59, 130, 246, 0.15); color: #3b82f6; border: 1px solid #3b82f6; }
+    .badge-activated { background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid #22c55e; }
+    .badge-issue { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid #ef4444; }
+    .badge-refund { background: rgba(168, 85, 247, 0.15); color: #a855f7; border: 1px solid #a855f7; }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 20px;
+      align-items: center;
+      background: var(--bg-card);
+      padding: 15px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-color);
+    }
+
+    .ai-box {
+      background: linear-gradient(135deg, rgba(0, 210, 255, 0.05), rgba(157, 78, 221, 0.05));
+      border: 1px solid rgba(0, 210, 255, 0.3);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Admin Top Bar -->
+  <div class="admin-nav">
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-size:1.4rem;">⚡</span>
+        <h2 style="font-size:1.2rem; font-weight:800; background:linear-gradient(90deg, #00d2ff, #9d4edd); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+          ميجامان | غرفة التحكم المركزية والإدارة
+        </h2>
+      </div>
+      <div style="display:flex; gap:10px;">
+        <a href="supplier.html" class="nav-btn" style="border-color:#f97316; color:#f97316;" target="_blank">
+          <i class="fa-solid fa-truck-ramp-box"></i> شاشة الموردين
+        </a>
+        <a href="index.html" class="nav-btn" target="_blank">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> موقع العملاء
+        </a>
+        <button class="nav-btn primary" onclick="exportExcel()">
+          <i class="fa-solid fa-file-excel"></i> تصدير Excel (شيت لكل شركة + كل الطلبات)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="max-width:1400px;margin:10px auto 0; padding:0 15px; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px;">
+    <button class="nav-btn" onclick="adminLogout()" style="border-color:#ef4444;color:#ef4444;"><i class="fa-solid fa-right-from-bracket"></i> خروج الإدارة</button>
+    <button class="nav-btn" onclick="resetOrdersOnly()" style="border-color:#ef4444;color:#ef4444;" title="حذف الطلبات والحجوزات فقط مع الاحتفاظ بحسابات العملاء والإعدادات والباقات"><i class="fa-solid fa-trash-can"></i> تصفير الطلبات فقط</button>
+  </div>
+<main class="container" style="padding: 25px 20px;">
+
+    <!-- TOP FINANCIAL & OPERATIONAL KPIS -->
+    <div class="kpi-grid">
+      <div class="kpi-card green">
+        <div class="kpi-title"><i class="fa-solid fa-sack-dollar"></i> إجمالي المبالغ المستلمة</div>
+        <div class="kpi-val" id="kpi-total-revenue">0 ج</div>
+        <div class="kpi-sub">اليومي: <span id="kpi-daily-revenue">0</span> ج | الشهري: <span id="kpi-monthly-revenue">0</span> ج</div>
+      </div>
+
+      <div class="kpi-card purple">
+        <div class="kpi-title"><i class="fa-solid fa-chart-line"></i> صافي الأرباح المقدرة</div>
+        <div class="kpi-val" id="kpi-net-profit">0 ج</div>
+        <div class="kpi-sub">اليومي: <span id="kpi-daily-profit">0</span> ج | الشهري: <span id="kpi-monthly-profit">0</span> ج</div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-title"><i class="fa-solid fa-layer-group"></i> إجمالي الطلبات الكلي</div>
+        <div class="kpi-val" id="kpi-total-orders">0</div>
+        <div class="kpi-sub">جميع الشبكات والعمليات</div>
+      </div>
+
+      <div class="kpi-card yellow">
+        <div class="kpi-title"><i class="fa-solid fa-clock"></i> طلبات يتم مراجعتها (حجز)</div>
+        <div class="kpi-val" id="kpi-pending-review">0</div>
+        <div class="kpi-sub">في انتظار الدفع أو الإثبات</div>
+      </div>
+
+      <div class="kpi-card orange">
+        <div class="kpi-title"><i class="fa-solid fa-forward"></i> في انتظار التفعيل (للمورد)</div>
+        <div class="kpi-val" id="kpi-awaiting-activation">0</div>
+        <div class="kpi-sub">تم استلام المبلغ وجاهزة</div>
+      </div>
+
+      <div class="kpi-card green">
+        <div class="kpi-title"><i class="fa-solid fa-check-double"></i> طلبات تم تفعيلها</div>
+        <div class="kpi-val" id="kpi-activated-orders">0</div>
+        <div class="kpi-sub">عمليات ناجحة 100%</div>
+      </div>
+
+      <div class="kpi-card red">
+        <div class="kpi-title"><i class="fa-solid fa-triangle-exclamation"></i> مشكلات ومرتجعات</div>
+        <div class="kpi-val" id="kpi-issues-refunds">0</div>
+        <div class="kpi-sub">مرتجع: <span id="kpi-refund-amount">0</span> ج</div>
+      </div>
+    </div>
+
+    <!-- NETWORK DISTRIBUTION STATS -->
+    <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-bottom:25px;">
+      <div style="background:rgba(123,31,162,0.15); border:1px solid #7b1fa2; border-radius:var(--radius-sm); padding:12px; text-align:center;">
+        <span style="font-size:0.85rem; color:#d500f9;">🟣 وي (WE)</span>
+        <h4 id="stat-we-count" style="font-size:1.4rem; color:#fff;">0</h4>
+      </div>
+      <div style="background:rgba(0,135,68,0.15); border:1px solid #008744; border-radius:var(--radius-sm); padding:12px; text-align:center;">
+        <span style="font-size:0.85rem; color:#00e676;">🟢 اتصالات (Etisalat)</span>
+        <h4 id="stat-etisalat-count" style="font-size:1.4rem; color:#fff;">0</h4>
+      </div>
+      <div style="background:rgba(255,102,0,0.15); border:1px solid #ff6600; border-radius:var(--radius-sm); padding:12px; text-align:center;">
+        <span style="font-size:0.85rem; color:#ff9100;">🟠 أورنج (Orange)</span>
+        <h4 id="stat-orange-count" style="font-size:1.4rem; color:#fff;">0</h4>
+      </div>
+      <div style="background:rgba(230,0,0,0.15); border:1px solid #e60000; border-radius:var(--radius-sm); padding:12px; text-align:center;">
+        <span style="font-size:0.85rem; color:#ff5252;">🔴 فودافون (Vodafone)</span>
+        <h4 id="stat-vodafone-count" style="font-size:1.4rem; color:#fff;">0</h4>
+      </div>
+    </div>
+
+    <!-- AI SMART RECONCILIATION SIMULATOR SECTION -->
+    <div class="ai-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <h3 style="font-size:1.15rem; color:var(--primary); display:flex; align-items:center; gap:8px;">
+          <i class="fa-solid fa-robot"></i> محرك المطابقة الذكي (AI & SMS Reconciliation)
+        </h3>
+        <span style="font-size:0.8rem; background:rgba(0,210,255,0.15); color:var(--primary); padding:3px 10px; border-radius:12px;">
+          نظام محاكاة رسائل جوجل / إنستاباي
+        </span>
+      </div>
+      <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:15px;">
+        الصق هنا نص رسالة التحويل المستلمة من فودافون كاش أو إنستاباي أو تطبيق البنك؛ سيقوم الذكاء الاصطناعي باستخراج المبلغ ورقم الهاتف وتأكيد الطلب ونقله إلى المورد تلقائياً!
+      </p>
+      <div style="display:flex; gap:10px;">
+        <input type="text" id="ai-sms-input" class="form-input" placeholder="الصق هنا نص رسالة التحويل" style="margin-bottom:0;">
+        <button class="btn-select-pkg" style="width:auto; padding:0 25px; white-space:nowrap;" onclick="runAiReconcile()">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> فحص ومطابقة
+        </button>
+      </div>
+      <div id="ai-reconcile-result" style="display:none; margin-top:15px; padding:12px; background:rgba(0,0,0,0.3); border-radius:var(--radius-sm); font-size:0.85rem;">
+        <!-- Injected -->
+      </div>
+    </div>
+
+    <!-- ORDERS FILTER & SEARCH BAR -->
+    <div class="filter-bar">
+      <div style="flex: 2; min-width:220px;">
+        <input type="text" id="admin-search-input" class="form-input" placeholder="بحث باسم العميل أو رقم التفعيل أو رقم الطلب..." oninput="filterOrders()" style="margin-bottom:0;">
+      </div>
+
+      <div style="flex: 1; min-width:160px;">
+        <select id="admin-status-filter" class="form-input" onchange="filterOrders()" style="margin-bottom:0;">
+          <option value="ALL">جميع الحالات</option>
+          <option value="طلبات يتم مراجعتها -تم حجزها">طلبات يتم مراجعتها (حجز)</option>
+          <option value="طلبات تمت مراجعتها-في انتظار التفعيل">تمت المراجعة (في انتظار التفعيل)</option>
+          <option value="تم تفعيلها">تم تفعيلها بنجاح</option>
+          <option value="طلبات لم يتم تفعيلها-يوجد مشكله">يوجد مشكلة بالطلب</option>
+          <option value="استرداد">استرداد / مرتجع</option>
+        </select>
+      </div>
+
+      <div style="flex: 1; min-width:140px;">
+        <select id="admin-network-filter" class="form-input" onchange="filterOrders()" style="margin-bottom:0;">
+          <option value="ALL">جميع الشبكات</option>
+          <option value="WE">🟣 WE</option>
+          <option value="ETISALAT">🟢 اتصالات</option>
+          <option value="ORANGE">🟠 أورنج</option>
+          <option value="VODAFONE">🔴 فودافون</option>
+        </select>
+      </div>
+
+      <button class="nav-btn" onclick="loadAdminData()" style="padding:11px 18px;">
+        <i class="fa-solid fa-rotate"></i> تحديث فوري
+      </button>
+    </div>
+
+    <!-- MAIN ORDERS TABLE -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>رقم الطلب</th>
+            <th>العميل</th>
+            <th>رقم التفعيل</th>
+            <th>واتساب</th>
+            <th>الشبكة</th>
+            <th>الباقة</th>
+            <th>السعر</th>
+            <th>إثبات الدفع</th>
+            <th>حالة الطلب</th>
+            <th>الإجراءات الفورية</th>
+          </tr>
+        </thead>
+        <tbody id="admin-orders-tbody">
+          <!-- Injected dynamically -->
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- ============================================== -->
+  <!-- MODAL: ORDER STATUS EDIT & NOTIFICATION -->
+  <!-- ============================================== -->
+  <div id="status-edit-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-pen-to-square" style="color:var(--primary);"></i> تعديل حالة الطلب ونقله</h3>
+        <button class="modal-close-btn" onclick="closeModal('status-edit-modal')">&times;</button>
+      </div>
+
+      <div id="modal-order-summary" style="margin-bottom:15px; font-size:0.9rem; color:var(--text-muted);">
+        <!-- Summary -->
+      </div>
+
+      <div class="form-group">
+        <label>الحالة الجديدة للطلب:</label>
+        <select id="edit-order-status" class="form-input">
+          <option value="طلبات يتم مراجعتها -تم حجزها">🟡 طلبات يتم مراجعتها - تم حجزها</option>
+          <option value="طلبات تمت مراجعتها-في انتظار التفعيل">🟠 تمت مراجعتها - في انتظار التفعيل (تظهر للمورد فوراً)</option>
+          <option value="تم تفعيلها">✅ تم تفعيلها بنجاح</option>
+          <option value="طلبات لم يتم تفعيلها-يوجد مشكله">🔴 لم يتم تفعيلها - يوجد مشكلة</option>
+          <option value="استرداد">🟣 استرداد المبلغ للعميل</option>
+          <option value="معلق">⏳ معلق للمراجعة</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>حالة الدفع:</label>
+        <select id="edit-payment-status" class="form-input">
+          <option value="تم الدفع">🟢 تم الدفع وتأكيد الاستلام</option>
+          <option value="في انتظار الدفع">🔵 في انتظار الدفع</option>
+          <option value="استرداد">🟣 تم الاسترداد</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>ملاحظات داخلية / رسالة للمورد أو العميل:</label>
+        <input type="text" id="edit-order-notes" class="form-input" placeholder="اكتب ملاحظة أو سبب المشكلة...">
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:20px;">
+        <button class="btn-select-pkg" onclick="saveOrderStatus()">
+          <i class="fa-solid fa-floppy-disk"></i> حفظ وتحديث النظام
+        </button>
+        <button class="nav-btn" onclick="closeModal('status-edit-modal')" style="width:auto;">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: IMAGE PROOF VIEWER -->
+  <!-- ============================================== -->
+  <div id="proof-viewer-modal" class="modal-overlay">
+    <div class="modal-card" style="text-align:center;">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-image"></i> إثبات الدفع</h3>
+        <button class="modal-close-btn" onclick="closeModal('proof-viewer-modal')">&times;</button>
+      </div>
+      <div style="max-height:70vh; overflow:auto;">
+        <img id="modal-proof-img" src="" style="max-width:100%; border-radius:var(--radius-sm); border:1px solid var(--border-color);" alt="إثبات الدفع">
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
